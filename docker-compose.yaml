@@ -81,7 +81,7 @@ services:
   
   payment:
     build: ./payment
-    image: joindevops/payment:v1
+    image: robo/payment:v1
     container_name: payment
     environment:
       CART_HOST: "cart"

@@ -63,7 +63,7 @@ services:
 
   shipping:
     build: ./shipping
-    image: joindevops/shipping:v1
+    image: robo/shipping:v1
     container_name: shipping
     environment:
       CART_ENDPOINT: "cart:8080"

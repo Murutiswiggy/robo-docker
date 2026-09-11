@@ -12,7 +12,7 @@ WORKDIR /app
 RUN addgroup -S robo && adduser -S -G robo robo && \
     chown -R robo:robo /app
 COPY --from=builder /app/shipping.jar .
-USER roboshop
+USER robo
 CMD ["java", "-jar", "shipping.jar"]
 
 

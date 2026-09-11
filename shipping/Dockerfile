@@ -1,22 +1,19 @@
-FROM python:3.9.25-alpine3.22 AS builder
+FROM maven:3.9.16 AS builder
 WORKDIR /app
-COPY requirements.txt .
-# COPY payment.ini .
-# COPY *.py .
-RUN apk add --no-cache --virtual .build-deps gcc musl-dev linux-headers python3-dev \
-    && pip3 install --prefix=/install -r requirements.txt \
-    && apk del .build-deps
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package && \
+    mv target/shipping-1.0.jar shipping.jar 
 
-FROM python:3.9.25-alpine3.22
-WORKDIR /app
+# Java is portable not OS dependent, application built in windows can run in Linux
+FROM eclipse-temurin:17-jre-alpine
 EXPOSE 8080
-RUN addgroup -S robo && adduser -S -G robo robo && \
-    chown -R robo:robo /app
-COPY  --from=builder /install /usr/local
-COPY --chown=robo:robo payment.ini *.py requirements.txt .
-USER robo
-CMD ["uwsgi", "--ini", "payment.ini"]
-
+WORKDIR /app
+RUN addgroup -S roboshop && adduser -S -G roboshop roboshop && \
+    chown -R roboshop:roboshop /app
+COPY --from=builder /app/shipping.jar .
+USER roboshop
+CMD ["java", "-jar", "shipping.jar"]
 
 
 

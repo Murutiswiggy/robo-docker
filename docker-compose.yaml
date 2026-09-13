@@ -4,19 +4,19 @@ services:
 
   mongodb:
     build: ./mongodb
-    image: robo/mongodb:v1
+    image: murali9686/mongodb:v1
     container_name: mongodb
 
   catalogue:
       build: ./catalogue
-      image: robo/catalogue:v1
+      image: murali9686/catalogue:v1
       container_name: catalogue
       depends_on:
         - mongodb 
   
   frontend:
      build: ./frontend
-     image: robo/frontend:v1
+     image: murali9686/frontend:v1
      container_name: frontend
      ports: 
       - "80:80"
@@ -31,7 +31,7 @@ services:
 
   user:
     build: ./user
-    image: robo/user:v1
+    image: murali9686/user:v1
     container_name: user
     environment:
        MONGO: true
@@ -43,7 +43,7 @@ services:
     
   cart:
    build: ./cart
-   image: robo/cart:v1
+   image: murali9686/cart:v1
    container_name: cart
    environment:
      REDIS_HOST: redis
@@ -55,7 +55,7 @@ services:
 
   mysql:
     build: ./mysql
-    image: robo/mysql:v1
+    image: murali9686/mysql:v1
     container_name: mysql
     command: --innodb-lock_wait_timeout=120
     environment:
@@ -63,7 +63,7 @@ services:
 
   shipping:
     build: ./shipping
-    image: robo/shipping:v1
+    image: murali9686/shipping:v1
     container_name: shipping
     environment:
       CART_ENDPOINT: "cart:8080"
@@ -81,7 +81,7 @@ services:
   
   payment:
     build: ./payment
-    image: robo/payment:v1
+    image: murali9686/payment:v1
     container_name: payment
     environment:
       CART_HOST: "cart"

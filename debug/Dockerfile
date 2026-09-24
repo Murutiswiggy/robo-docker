@@ -1,17 +1,4 @@
 FROM almalinux:9
-
-RUN dnf install -y \
-        curl \
-        wget \
-        telnet \
-        iputils \
-        bind-utils \
-        net-tools \
-        iproute \
-        procps-ng \
-        traceroute \
-        nmap-ncat \
-        openssl \
-    && dnf clean all
-
+RUN dnf install telnet -y
+RUN dnf install iputils -y
 CMD ["sleep", "10000"]
